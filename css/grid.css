@@ -1,0 +1,87 @@
+/* MathSheets grid: name box + formula bar, headers, cells, selection, editor (sizes measured from Google Sheets) */
+
+/* ---- name box + formula bar (29px) ---- */
+#formulabar {
+  display: flex; align-items: center; background: #fff; border-bottom: 1px solid var(--ms-border);
+}
+.g-namebox { flex: none; display: flex; align-items: center; height: 100%; margin-left: 8px; width: 91px; }
+.g-name {
+  width: 74px; height: 23px; padding: 0 0 0 6px; border: 0; border-radius: 2px; outline: none; background: transparent;
+  font: 13px var(--ms-ui-font); color: var(--ms-text);
+}
+.g-namebox:hover .g-name { box-shadow: inset 0 0 0 1px #dadce0; }
+.g-name:focus, .g-namebox:hover .g-name:focus { box-shadow: inset 0 0 0 2px var(--ms-sel); background: #fff; }
+.g-name-dd { width: 17px; height: 23px; display: flex; align-items: center; justify-content: center; color: var(--ms-icon); cursor: pointer; border-radius: 2px; }
+.g-name-dd:hover { background: var(--ms-hover); }
+.g-name-dd .msi { font-size: 18px; }
+.g-fbdiv { flex: none; width: 1px; height: 17px; background: var(--ms-border); }
+.g-fx { flex: none; width: 34px; margin-left: 7px; display: flex; align-items: center; justify-content: center; color: #ababab; }
+.g-fx .msi { font-size: 18px; }
+.g-bar {
+  flex: 1; min-width: 0; height: 100%; padding: 0 8px 0 0; border: 0; outline: none; background: transparent;
+  font: 13px var(--ms-ui-font); color: var(--ms-text);
+}
+
+/* ---- scroll container + sticky headers ---- */
+#grid { overflow: hidden; user-select: none; -webkit-user-select: none; }
+.g-scroll { position: absolute; inset: 0; overflow: auto; outline: none; }
+.g-scroll::-webkit-scrollbar { width: 14px; height: 14px; background: #fff; }
+.g-scroll::-webkit-scrollbar-thumb { background: #dadce0; border: 3px solid #fff; border-radius: 8px; }
+.g-scroll::-webkit-scrollbar-thumb:hover { background: #bdc1c6; }
+.g-scroll::-webkit-scrollbar-corner { background: #fff; }
+.g-content { position: relative; }
+.g-top { position: sticky; top: 0; z-index: 4; display: flex; height: 24px; }
+.g-corner {
+  position: sticky; left: 0; z-index: 2; flex: none; width: 46px; height: 24px; background: var(--ms-corner);
+  border-right: 1px solid var(--ms-hdr-border); border-bottom: 1px solid var(--ms-hdr-border);
+  box-shadow: inset -4px 0 var(--ms-frozen), inset 0 -4px var(--ms-frozen);
+}
+.g-colhdr { position: relative; flex: none; height: 24px; background: #fff; border-bottom: 1px solid var(--ms-hdr-border); }
+.g-body { display: flex; }
+.g-rowhdr { position: sticky; left: 0; z-index: 3; flex: none; width: 46px; background: #fff; border-right: 1px solid var(--ms-hdr-border); }
+.g-ch, .g-rh {
+  position: absolute; display: flex; align-items: center; justify-content: center; overflow: hidden;
+  font: 12px var(--ms-ui-font); color: var(--ms-hdr-text); background: #fff;
+}
+.g-ch { top: 0; height: 23px; border-right: 1px solid var(--ms-hdr-border); }
+.g-rh { left: 0; width: 45px; border-bottom: 1px solid var(--ms-hdr-border); }
+.g-ch.g-hl, .g-rh.g-hl { background: var(--ms-active-bg); color: var(--ms-blue); font-weight: 600; }
+.g-ch.g-full, .g-rh.g-full { background: var(--ms-blue); color: #fff; font-weight: 600; }
+.g-rsz { position: absolute; display: none; z-index: 1; background: var(--ms-sel); }
+.g-rszc { top: 2px; width: 4px; height: 19px; border-radius: 2px; cursor: col-resize; }
+.g-rszr { left: 2px; height: 4px; width: 41px; border-radius: 2px; cursor: row-resize; }
+.g-guide { position: absolute; display: none; z-index: 5; background: var(--ms-sel); pointer-events: none; }
+
+/* ---- cells ---- */
+.g-cells { position: relative; flex: none; z-index: 1; background: #fff; }
+.g-row { position: absolute; left: 0; right: 0; }
+.g-c {
+  position: absolute; top: 0; bottom: 0; display: flex; align-items: flex-end; padding: 0 3px 1px;
+  border-right: 1px solid var(--ms-grid); border-bottom: 1px solid var(--ms-grid);
+  font: 10pt var(--ms-cell-font); line-height: 17px; color: #000; white-space: pre; overflow: hidden;
+}
+.g-c.g-cov { border-right-color: transparent; }
+.g-c.g-err::after {
+  content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0;
+  border-top: 6px solid #e64a19; border-left: 6px solid transparent;
+}
+
+/* ---- selection, clipboard and fill overlays ---- */
+.g-sel { position: absolute; left: 0; top: 0; z-index: 2; }
+.g-sel > div { position: absolute; display: none; pointer-events: none; }
+.g-range { border: 1px solid var(--ms-sel); }
+.g-fill { background: var(--ms-sel-fill); }
+.g-active { border: 2px solid var(--ms-sel); }
+.g-ants { border: 2px dashed var(--ms-sel); }
+.g-fillprev { border: 1px dashed #5f6368; }
+.g-sel > .g-handle { pointer-events: auto; cursor: crosshair; background: var(--ms-sel); border: 1px solid #fff; border-radius: 1px; }
+.g-editing .g-sel > .g-handle { display: none !important; }
+.g-overlay { position: absolute; left: 0; top: 0; width: 0; height: 0; z-index: 3; pointer-events: none; }
+
+/* ---- in-cell editor ---- */
+.g-editor {
+  position: absolute; display: none; z-index: 6; margin: 0; padding: 2px 2px 0; outline: none;
+  border: 2px solid var(--ms-sel); background: #fff; color: #000; font: 10pt var(--ms-cell-font);
+  box-shadow: 0 2px 6px 2px rgba(60, 64, 67, .15); user-select: text; -webkit-user-select: text;
+}
+.g-sink { position: absolute; left: 0; top: 0; width: 1px; height: 1px; opacity: 0; padding: 0; border: 0; resize: none; pointer-events: none; }

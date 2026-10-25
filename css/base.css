@@ -1,0 +1,61 @@
+/* MathSheets base: design tokens measured from Google Sheets, page layout, shared menu + icon styles. */
+:root {
+  --ms-chrome: #f9fbfd;         /* app background behind title bar / formula bar / sheet bar */
+  --ms-toolbar: #f0f4f9;        /* toolbar pill */
+  --ms-text: #1f1f1f;
+  --ms-icon: #444746;
+  --ms-muted: #5f6368;
+  --ms-hover: rgba(68, 71, 70, .08);
+  --ms-press: rgba(68, 71, 70, .14);
+  --ms-active-bg: #d3e3fd;      /* pressed toolbar toggle / selected header */
+  --ms-blue: #0b57d0;           /* active tab text, links */
+  --ms-sel: #1a73e8;            /* selection border */
+  --ms-sel-fill: rgba(14, 101, 235, .1);
+  --ms-hdr-border: #c4c7c5;     /* header separators */
+  --ms-hdr-text: #444746;
+  --ms-corner: #f8f9fa;
+  --ms-grid: #e1e1e1;           /* cell gridlines */
+  --ms-frozen: #c7c7c7;
+  --ms-border: #c7c7c7;         /* formula bar borders */
+  --ms-ui-font: Roboto, Arial, sans-serif;
+  --ms-cell-font: Arial, sans-serif;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; height: 100%; overflow: hidden; }
+body {
+  display: flex; flex-direction: column;
+  font: 13px var(--ms-ui-font); color: var(--ms-text); background: var(--ms-chrome);
+  -webkit-font-smoothing: antialiased;
+}
+/* page regions (top to bottom), sizes measured from Google Sheets at 1440x900 */
+#titlebar   { flex: none; height: 64px; }                    /* Toolbar & Menu agent */
+#toolbar    { flex: none; height: 40px; margin: 1px 16px 8px; } /* Toolbar & Menu agent */
+#formulabar { flex: none; height: 29px; }                    /* Grid agent */
+#grid       { flex: 1; min-height: 0; position: relative; background: #fff; }  /* Grid agent */
+#sheetbar   { flex: none; height: 37px; }                    /* Toolbar & Menu agent */
+
+/* Material Symbols icons: icon('undo') -> <span class="msi">undo</span> */
+.msi {
+  font-family: 'Material Symbols Outlined'; font-weight: normal; font-style: normal;
+  font-size: 20px; line-height: 1; letter-spacing: normal; text-transform: none; white-space: nowrap;
+  display: inline-block; direction: ltr; -webkit-font-feature-settings: 'liga'; font-feature-settings: 'liga';
+  font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 20; user-select: none; vertical-align: middle;
+}
+
+/* Shared dropdown / context menu (measured: 14px items, 32px tall, 6px 0 padding, soft shadow) */
+.ms-menu {
+  position: fixed; z-index: 1000; min-width: 200px; max-height: calc(100vh - 8px); overflow-y: auto;
+  padding: 6px 0; background: #fff; border-radius: 4px;
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .3);
+  font: 14px var(--ms-ui-font); color: var(--ms-text); user-select: none;
+}
+.ms-item { display: flex; align-items: center; height: 32px; padding: 0 16px 0 0; cursor: default; white-space: nowrap; }
+.ms-item:hover, .ms-item.ms-active { background: rgba(31, 31, 31, .08); }
+.ms-item.ms-disabled { color: rgba(31, 31, 31, .38); }
+.ms-item.ms-disabled:hover { background: none; }
+.ms-icon { width: 44px; flex: none; text-align: center; color: var(--ms-icon); }
+.ms-icon .msi { font-size: 18px; }
+.ms-label { flex: 1; padding-right: 24px; }
+.ms-shortcut { color: var(--ms-muted); font-size: 14px; }
+.ms-sub { color: var(--ms-icon); margin-right: -8px; }
+.ms-sep { height: 1px; margin: 6px 0; background: #e3e3e3; }

@@ -1,0 +1,31 @@
+/* MathSheets formula UI: function autocomplete dropdown, argument hint, colored reference boxes. */
+
+/* Autocomplete card (shares .ms-menu shadow/radius; overrides sizing to match Google's suggestion list) */
+.fx-ac.ms-menu {
+  min-width: 300px; max-width: 440px; padding: 4px 0;
+  font: 13px var(--ms-ui-font); z-index: 1100;
+}
+.fx-ac-item { padding: 6px 16px; cursor: pointer; white-space: nowrap; }
+.fx-ac-item.fx-on { background: #e8f0fe; }
+.fx-ac-sig { color: var(--ms-text); overflow: hidden; text-overflow: ellipsis; line-height: 18px; }
+.fx-ac-sig b { font-weight: 700; }
+.fx-ac-args { color: var(--ms-muted); margin-left: 1px; }
+.fx-ac-desc {
+  margin-top: 2px; color: var(--ms-muted); font-size: 12px; line-height: 16px; white-space: normal;
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
+}
+
+/* Argument hint: "SUM(value1, [value2, ...])" with the current argument bold */
+.fx-hint {
+  position: fixed; z-index: 1100; padding: 6px 12px; max-width: 440px;
+  background: #fff; border-radius: 4px; color: var(--ms-muted);
+  box-shadow: 0 2px 6px 2px rgba(0, 0, 0, .15), 0 1px 2px rgba(0, 0, 0, .3);
+  font: 13px var(--ms-ui-font); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; pointer-events: none;
+}
+.fx-hint b { color: var(--ms-text); font-weight: 700; }
+.fx-ac[hidden], .fx-hint[hidden] { display: none; }
+
+/* Reference highlight boxes, appended to Grid.overlay while a formula is being edited */
+.fx-ref {
+  position: absolute; box-sizing: border-box; border: 2px solid; pointer-events: none; z-index: 5;
+}

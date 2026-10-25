@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>MYMATHSHEET</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..24,400,0..1,0&display=block">
+<link rel="stylesheet" href="css/base.css">
+<link rel="stylesheet" href="css/grid.css">
+<link rel="stylesheet" href="css/formula.css">
+<link rel="stylesheet" href="css/toolbar.css">
+</head>
+<body>
+<header id="titlebar"></header>
+<div id="toolbar"></div>
+<div id="formulabar"></div>
+<main id="grid"></main>
+<footer id="sheetbar"></footer>
+<div id="toasts"></div>
+<script src="js/core.js"></script>
+<script src="js/ui-kit.js"></script>
+<script src="js/formula.js"></script>
+<script src="js/grid.js"></script>
+<script src="js/toolbar.js"></script>
+<script>
+  Object.assign(window, { Sheet, Menu, Formula, Grid, Toolbar });   // top-level const isn't on window; parts use window.X?.
+  Formula.init();  // subscribes to change -> recalc
+  Grid.init();      // builds grid + formula bar
+  Toolbar.init();   // builds title bar, menus, toolbar, sheet tab; loads auto-saved data
+  Sheet.select(0, 0);
+</script>
+</body>
+</html>
